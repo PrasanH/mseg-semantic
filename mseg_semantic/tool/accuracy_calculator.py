@@ -133,7 +133,7 @@ class AccuracyCalculator:
             pred = cv2.imread(os.path.join(pred_folder, image_name + ".png"), cv2.IMREAD_GRAYSCALE)
 
             target_img = imageio.imread(target_path)
-            target_img = target_img.astype(np.int64)
+            target_img = target_img.astype(int)
 
             target_img = self.convert_label_to_pred_taxonomy(target_img)
 
@@ -175,10 +175,10 @@ class AccuracyCalculator:
             pred_rel = cv2.imread(os.path.join(pred_folder, image_name + ".png"), cv2.IMREAD_GRAYSCALE)
 
             target_img = imageio.imread(target_path)
-            target_img = target_img.astype(np.int64)
+            target_img = target_img.astype(int)
 
             target_img_relabeled = imageio.imread(target_path_relabeled)
-            target_img_relabeled = target_img_relabeled.astype(np.int64)
+            target_img_relabeled = target_img_relabeled.astype(int)
 
             pred_unrel, target_u_tax, acc_diff = eval_rel_model_pred_on_unrel_data(
                 pred_rel,

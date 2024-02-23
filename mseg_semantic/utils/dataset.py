@@ -98,7 +98,7 @@ class SemData(Dataset):
         image = np.float32(image)
 
         label = imageio.imread(label_path)  # # GRAY 1 channel ndarray with shape H * W
-        label = label.astype(np.int64)
+        label = label.astype(int)
 
         if image.shape[0] != label.shape[0] or image.shape[1] != label.shape[1]:
             raise (RuntimeError("Image & label shape mismatch: " + image_path + " " + label_path + "\n"))

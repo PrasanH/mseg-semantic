@@ -14,8 +14,8 @@ class ConfusionMatrixRenderer:
         self.save_folder = save_folder
         self.class_names = np.array(class_names)
         self.dataset_name = dataset_name
-        self.y_pred = np.zeros((0, 1), dtype=np.int64)
-        self.y_true = np.zeros((0, 1), dtype=np.int64)
+        self.y_pred = np.zeros((0, 1), dtype=int)
+        self.y_true = np.zeros((0, 1), dtype=int)
 
     def update(self, pred: np.ndarray, target: np.ndarray) -> None:
         """
