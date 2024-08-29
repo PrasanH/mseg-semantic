@@ -319,6 +319,10 @@ class InferenceTask:
         elif is_dir:
             # argument is a path to a directory
             self.create_path_lists_from_dir()
+            #image_paths = self.create_path_lists_from_dir()
+            #for image_path in image_paths:
+                #self.input_file = image_path  # Set input_file to the current image path
+                #self.render_single_img_pred()
             test_loader, self.data_list = create_test_loader(self.args)
             self.execute_on_dataloader(test_loader)
         elif is_vid:
@@ -332,8 +336,8 @@ class InferenceTask:
     def render_single_img_pred(self, min_resolution: int = 1080) -> None:
         """Since overlaid class text is difficult to read below 1080p, we upsample predictions."""
         in_fname_stem = Path(self.input_file).stem
-        output_gray_fpath = f"{in_fname_stem}_gray.jpg"
-        output_demo_fpath = f"{in_fname_stem}_overlaid_classes.jpg"
+        output_gray_fpath = f"{in_fname_stem}_gray.png"
+        output_demo_fpath = f"{in_fname_stem}_overlaid_classes.png"
         logger.info(f"Write image prediction to {output_demo_fpath}")
 
         rgb_img = imread_rgb(self.input_file)
@@ -349,7 +353,7 @@ class InferenceTask:
         overlaid_img = frame_visualizer.overlay_instances(
             label_map=pred_label_img, id_to_class_name_map=self.id_to_class_name_map
         )
-        imageio.imwrite(output_demo_fpath, overlaid_img)
+        #imageio.imwrite(output_demo_fpath, overlaid_img)
         imageio.imwrite(output_gray_fpath, pred_label_img)
 
     def create_path_lists_from_dir(self) -> None:
@@ -358,6 +362,11 @@ class InferenceTask:
         txt_output_dir = str(Path(f"{_ROOT}/temp_files").resolve())
         txt_save_fpath = dump_relpath_txt(self.input_file, txt_output_dir)
         self.args.test_list = txt_save_fpath
+
+        # Return a list of image paths in the directory
+        #image_paths = [os.path.join(self.input_file, image_name) for image_name in os.listdir(self.input_file)]
+        #return image_paths
+    
 
     def execute_on_img(self, image: np.ndarray) -> np.ndarray:
         """
@@ -395,6 +404,7 @@ class InferenceTask:
         prediction = torch.argmax(prediction, axis=2)
         prediction = prediction.data.cpu().numpy()
         gray_img = np.uint8(prediction)
+        print(f"{gray_img.max()=}")
         return gray_img
 
     def execute_on_video(self, max_num_frames: int = 5000, min_resolution: int = 1080) -> None:

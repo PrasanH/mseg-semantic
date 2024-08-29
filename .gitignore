@@ -7,3 +7,17 @@ temp_files/*
 *.DS_Store
 .DS_Store
 
+out/
+resized_images/
+save_folder/
+output_images/
+New Folder/
+input_images/
+
+comapre_and_copy.py
+gen_filelist.py
+input_images.zip
+input_images1.tar.gz
+move_files.py
+mseg-3m.pth
+

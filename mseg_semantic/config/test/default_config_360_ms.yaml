@@ -8,7 +8,7 @@ TRAIN:
   layers: 50
   zoom_factor: 8  # zoom factor for final prediction during training, be in [1, 2, 4, 8]
   ignore_label: 255
-  workers: 16
+  workers: 4 
 
 TEST:
   vis_freq: 20
@@ -30,4 +30,6 @@ TEST:
   model_path: default
   model_name: default
   input_file: default
-  save_folder: default
+  save_folder: save_folder
+
+  
